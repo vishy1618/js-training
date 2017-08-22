@@ -3,6 +3,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
+import {tryConvert, toCelsius, toFahrenheit} from "./converter";
 import TemperatureInput from "./temperature-input";
 
 type Scale = 'c' | 'f';
@@ -18,7 +19,7 @@ class TemperatureCalculator extends React.Component {
     this.state = {temperature: '', scale: 'c'};
   }
 
-  handleCelciusChange = (temperature: string) => {
+  handleCelsiusChange = (temperature: string) => {
     this.setState({temperature, scale: 'c'});
   }
 
@@ -28,15 +29,28 @@ class TemperatureCalculator extends React.Component {
 
   render() {
     const {scale, temperature} = this.state;
+    let celsius, fahrenheit;
+
+    if (scale === 'f') {
+      fahrenheit  = temperature;
+      celsius     = tryConvert(temperature, toCelsius);
+    } else {
+      celsius     = temperature;
+      fahrenheit  = tryConvert(temperature, toFahrenheit);
+    }
 
     return (
       <div>
-        <legend>Enter temperature in Celsius:</legend>
-        <TemperatureInput scale="c" onTemperatureChange={this.handleCelciusChange} />
-        <TemperatureInput scale="f" onTemperatureChange={this.handleFahrenheitChange} />
-
+        <TemperatureInput
+          scale="c"
+          temperature={celsius}
+          onTemperatureChange={this.handleCelsiusChange} />
+        <TemperatureInput
+          scale="f"
+          temperature={fahrenheit}
+          onTemperatureChange={this.handleFahrenheitChange} />
         <BoilingVerdict
-          celsius={parseFloat(temperature)} />
+          celsius={parseFloat(celsius)} />
       </div>
     );
   }
