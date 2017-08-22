@@ -27,6 +27,7 @@
     "brunch": "^2",
     "clean-css-brunch": "^2",
     "flow-brunch": "^0.2.4",
+    "flow-bin": "0.52.0",
     "uglify-js-brunch": "^2"
   }
 }
