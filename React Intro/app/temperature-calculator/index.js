@@ -3,6 +3,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
+import TemperatureInput from "./temperature-input";
+
 class TemperatureCalculator extends React.Component {
   state: {
     temperature: string,
@@ -13,19 +15,15 @@ class TemperatureCalculator extends React.Component {
     this.state = {temperature: ''};
   }
 
-  handleChange = ({target}: {target: HTMLInputElement}) => {
-    this.setState({temperature: target.value});
-  }
-
   render() {
     const temperature = this.state.temperature;
 
     return (
       <div>
         <legend>Enter temperature in Celsius:</legend>
-        <input
-          value={temperature}
-          onChange={this.handleChange} />
+        <TemperatureInput scale="c" />
+        <TemperatureInput scale="f" />
+
         <BoilingVerdict
           celsius={parseFloat(temperature)} />
       </div>
